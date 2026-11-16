@@ -18,10 +18,7 @@ python chapter6/nl2sql/nl2sql_engine.py \
 
 ---
 
-> **所属章节**：提示工程方法· 提示工程方法
-> **学习基础**：完成第 1—2 课（RAG 与知识图谱），熟悉 SQL
-> **建议时长**：90—120 分钟
-> **难度**：深入
+学习本课需要 SQL 和表结构基础；不依赖知识图谱练习的产物。
 
 ## 工程任务
 
@@ -271,7 +268,7 @@ response = "SCHEMA_INSUFFICIENT: Current database lacks customer satisfaction ra
 
 - **多表关系**：掌握涉及十张以上表的复杂 JOIN 操作
 - **业务逻辑**：理解企业数据结构与分析需求
-- **性能优化**：掌握面向大规模数据集的查询优化策略
+- **执行观察**：区分模式检索、SQL 执行与结果摘要的开销
 
 <a id="2-mastering-intelligent-sql-generation"></a>
 
@@ -430,7 +427,7 @@ quality_metrics = {
 2. ✅ 针对复杂多表关系生成 SQL
 3. ✅ 实现只读查询执行与结果抽象
 4. ✅ 设计合理拒答与错误处理策略
-5. ✅ 掌握工程环境中的性能优化与监测方法
+5. ✅ 区分本地教学库的观察与生产数据库的性能、权限要求
 
 <a id="core-technical-achievements"></a>
 

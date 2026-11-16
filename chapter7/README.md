@@ -8,7 +8,10 @@
 
 | 练习 | 实验问题 |
 | --- | --- |
-| [CoT 与推理编排](cot_workflows/README.md) | 分解任务和交接中间结果后，原始约束是否保留，结果怎样独立核对？ |
+| [CoT 提示](cot_workflows/PROMPTING.md) | 单次请求中的求解提示改变了什么？ |
+| [多轮上下文传递](cot_workflows/CONTEXT.md) | 原任务和中间结果怎样进入下一轮？ |
+| [角色与任务交接](cot_workflows/HANDOFF.md) | 分工后，边界条件是否保留到实际代码？ |
+| [检查点与停止条件](cot_workflows/CHECKPOINTS.md) | 模型怎样评议候选，程序何时停止？ |
 | [自一致性](self_consistency/README.md) | 多个回答达成一致时是否真的正确，格式失败和弃权怎样影响结果？ |
 
 先写出可独立计算的参考答案，再比较单次与多次求解。保持题目和模型一致，记录调用次数与耗时；一次投票成功不足以说明一种策略普遍更好。

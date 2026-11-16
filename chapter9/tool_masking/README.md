@@ -132,8 +132,6 @@ python chapter9/tool_masking/tool_masking_demo.py --demo selection \
 
 <a id="next-steps"></a>
 
-## 下一步
-
 ## 在自己的项目中使用
 
 为自己的工具流程定义各状态允许的动作，在执行入口检查权限，再让模型提出一次越界动作。将同一限制接入[完整 Harness](../mcp_harness/README.md)，观察模型建议、程序拒绝与后续恢复是否形成闭环。

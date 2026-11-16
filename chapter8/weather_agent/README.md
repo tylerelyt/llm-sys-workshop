@@ -61,8 +61,6 @@ env -u AMAP_API_KEY python chapter8/weather_agent/multimodal_chat.py --city 上�
 
 <a id="next-steps"></a>
 
-## 下一步
-
 ## 在自己的项目中使用
 
 将工具链换成自己熟悉的两步查询，先验证普通 Python 调用，再交给模型选择。注入一次缺字段或空结果，检查最终回答是否说明缺口；需要跨进程复用工具时，继续做[MCP 工具接入](../../chapter9/mcp_tools/README.md)。

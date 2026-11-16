@@ -218,8 +218,6 @@ python chapter8/filesystem_memory/filesystem_memory_demo.py --demo persistence \
 
 <a id="next-steps"></a>
 
-## 下一步
-
 ## 在自己的项目中使用
 
 为自己的长任务选择一段原始观察存到文件，只将摘要与路径送入当前输入。重启后通过路径找回原文，核对摘要有没有丢失关键条件；再在[MCP Harness](../../chapter9/mcp_harness/README.md)中观察状态版本与循环接续。

@@ -55,4 +55,6 @@ python chapter8/persistent_memory/memgpt_integration_demo.py --memory-dir "$MEMO
 
 为自己的任务区分用户偏好、已完成事项与临时观察，分别决定何时写入、更新和读取。加入一次用户纠正并用新进程验证，检查旧信息是否仍影响回答；需要保存完整证据时，参考[文件系统记忆](../filesystem_memory/README.md)。
 
+持续运行时怎样从多次经历修订方法、评测候选并管理采用，继续阅读[动手学习自进化智能体](https://github.com/tylerelyt/self-evolving-agent-harness)；本练习先观察当前记忆、反馈或恢复机制怎样工作。
+
 [主题目录](../README.md) · [课程首页](../../README.md)

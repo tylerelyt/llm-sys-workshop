@@ -2,20 +2,15 @@
 
 # 知识图谱构建
 
-本课实现端到端知识图谱构建流水线，使用大语言模型和思维链（CoT）推理，从非结构化文本中解析实体并抽取关系。
+本课用五阶段流水线观察实体、属性、关系与别名如何进入图谱，再回到原文检查抽取与合并是否合理。
 
 先用原始教学文本运行完整五阶段，记录“蒂姆·库克”与“库克先生”在 `pre_linking_graph_state`、`post_linking_graph_state` 中的变化。学员要能指出支持合并的句子，并证明合并后“宣布产品”等关系仍指向正确对象。
 
-只修改 `data/sample_text.txt`，追加“工程师库克负责芯片测试，与 CEO 蒂姆·库克不是同一人。”保持模型、提示与类型定义不变再运行，预测同名工程师会不会被误合并。核对本轮日志中的候选实体、角色数量、`alias_map` 与最终三元组，确认两个角色各有原文依据，不能仅凭图上节点减少就判断改善。
+比较别名归并时，保持本轮抽取结果不变：在调用 `apply_entity_mapping` 之前复制图，分别对副本应用本轮原始 `entity_alias_map` 与移除一项非自映射后的版本。选择哪一项，由原文中的实际称呼和本轮返回值决定；没有非自映射时，先检查抽取与链接日志，不补造人物或关系。
 
-每轮结束后把本课 `results/` 复制到自己命名的对照目录。程序会更新固定文件名的图谱，日志按时间命名；先按终端显示的本轮日志定位结果，再打开对应 JSON 与 HTML。恢复输入文件中的追加句即可复跑原始样例。本练习需要在线模型完成抽取，本地结构检查只核对返回数据如何进入图谱。调用失败时程序以非零状态结束，旧图谱只能作为上一轮记录。
+每轮结束后把本课 `results/` 复制到自己的对照目录。程序更新固定文件名，日志按时间命名；先按终端显示的日志定位本轮记录，再打开对应 JSON 与 HTML。改变归并规则的对照复用同一批候选、关系与映射，避免把重新调用模型的波动归因于规则。在线调用失败时程序以非零状态结束，旧图谱只能作为上一轮记录。
 
----
-
-> **所属章节**：提示工程方法· 提示工程方法
-> **学习基础**：完成检索与重排练习，了解图论
-> **建议时长**：60—90 分钟
-> **难度**：进阶
+学习本课需要理解实体、关系与 Python 图结构；不依赖检索与重排练习的输出。
 
 ## 工程任务
 
@@ -32,8 +27,8 @@
 ### 需要掌握的技术能力
 
 - **信息抽取**：使用结构化提示词抽取实体、关系与属性
-- **本体工程**：实现模式自动优化与规范化算法
-- **思维链推理**：通过多步逻辑分析改善抽取精度
+- **模式归纳**：查看模型提出的类型与关系定义，检查实例如何使用它们
+- **角色分析**：对照模型的角色数量判断与原文，检查它是否支持别名归并
 - **实体解析**：结合上下文实现实体链接与共指消解
 - **图谱分析**：使用 NetworkX 和 Pyvis 生成交互式知识图谱
 
@@ -70,8 +65,8 @@ graph LR
 
 ### 2. 核心算法
 
-- **实体、关系与属性分离**：准确区分三类概念
-- **思维链推理**：通过多步逻辑分析改善准确性
+- **实体、关系与属性分离**：检查输出怎样区分三类信息
+- **角色分析**：将模型提出的分析作为待核对依据
 - **结合上下文的链接**：依据语义理解合并实体
 
 <a id="3-case-studies"></a>
@@ -198,16 +193,16 @@ reasoning = """
    - "CEO" = Position description, not independent entity
 3. Conclusion: Should merge into one person entity
 """
-final_entities = ["Apple Inc.", "Tim Cook"]  # Significantly improved accuracy
+final_entities = ["Apple Inc.", "Tim Cook"]  # 归并示意，正确性需回原文核对
 ```
 
 <a id="3-knowledge-graph-quality-assessment"></a>
 
-### 3. 知识图谱质量评估
+### 3. 图结构与语义核对
 
 <a id="automated-quality-metrics"></a>
 
-#### 自动化质量指标
+#### 图结构诊断
 
 ```python
 quality = kg.assess_quality()
@@ -215,6 +210,8 @@ quality = kg.assess_quality()
 print(quality["total_nodes"], quality["total_edges"])
 print(quality["issues"], quality["warnings"], quality["stats"])
 ```
+
+这些字段检查节点、边、孤立节点、自环和密度，不判断关系是否受原文支持。逐项核对发布人物、产品、芯片、地点、时间、股价幅度和评价对象；某项没有进入图时，区分候选遗漏、精炼丢失、过滤删除或归并改变。图中原文信息的保留范围由本轮结果决定。
 
 <a id="-practical-case-study"></a>
 
@@ -224,31 +221,15 @@ print(quality["issues"], quality["warnings"], quality["stats"])
 
 ### 输入文本示例
 
-在下面的教学示例中，逐句核对别名与关系。
-```
-Apple Inc.'s CEO Tim Cook announced the new iPhone 15 product yesterday at the California headquarters.
-This revolutionary smartphone features the advanced A17 chip with excellent performance and outstanding camera capabilities.
-Mr. Cook was very satisfied with this launch event, stating it's one of the most important products in Apple's history.
-```
+直接打开 [data/sample_text.txt](data/sample_text.txt)，这是脚本实际读取的中文原文。逐句标出实体称呼、关系和限定信息，再与本轮记录对照。
 
 <a id="extraction-results"></a>
 
 ### 抽取结果
 
-```python
-# Final knowledge graph
-entities = [
-    {"name": "Tim Cook", "type": "Person", "attributes": {"position": "CEO", "emotion": "satisfied"}},
-    {"name": "Apple Inc.", "type": "Organization", "attributes": {"headquarters": "California"}},
-    {"name": "iPhone 15", "type": "Product", "attributes": {"chip": "A17", "feature": "revolutionary"}}
-]
+打开本轮 `knowledge_graph.json` 查看实际节点和关系；用 `pre_linking_graph_state`、`post_linking_graph_state` 对照归并前后，用阶段日志追溯关系来源。模型分析、图结构诊断和最终图是不同的观察对象：前两者中的文字不自动成为最终图的字段。
 
-relations = [
-    {"subject": "Tim Cook", "predicate": "serves_as_CEO", "object": "Apple Inc."},
-    {"subject": "Apple Inc.", "predicate": "released", "object": "iPhone 15"},
-    {"subject": "Tim Cook", "predicate": "announced", "object": "iPhone 15"}
-]
-```
+节点变少不代表信息更准确，别名归并也不会补回抽取时已丢失的属性或限定信息。原文没有给出的绝对日期与现实世界事实，不由本课补齐。
 
 <a id="visualization-features"></a>
 
@@ -369,8 +350,6 @@ temperature = 0.1    # More conservative output
 ---
 
 <a id="next-steps"></a>
-
-## 后续学习
 
 ## 在自己的项目中使用
 

@@ -54,8 +54,6 @@ python chapter8/conversation_memory/example2.py
 
 <a id="next-steps"></a>
 
-## 下一步
-
 ## 在自己的项目中使用
 
 为自己的多轮任务列出必须保留的事实，加入纠正旧信息和长间隔追问，再比较窗口与摘要。跨进程继续任务时，进入[持久记忆](../persistent_memory/README.md)，区分历史裁剪、事实更新和长期保存。

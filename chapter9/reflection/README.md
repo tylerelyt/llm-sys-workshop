@@ -55,10 +55,11 @@ python chapter9/reflection/reflection_system_demo.py --memory-file "$REFLECTION_
 
 每组实验使用新的输出目录。只删除本次 `REFLECTION_RUN`，不改脚本同目录下的既有记忆文件。归档和核心字段选择的另一种实现见[持久记忆](../../chapter8/persistent_memory/README.md)。
 
-终端默认展示原稿、模型评估、遗漏建议与实际改稿差异，不再用字数增长代替效果对照。评估正文显示前 500 字、差异显示前 36 行并提示截断；用命令中的 `--output` 文件逐项核对完整正文。
 
 ## 在自己的项目中使用
 
 选一个有明确质量标准的实际产物，先由人标注缺陷，再比较修改前后是否逐项解决。将经过复核的经验放入[持久记忆](../../chapter8/persistent_memory/README.md)，用新的同类任务验证是否有迁移价值。
+
+持续运行时怎样从多次经历修订方法、评测候选并管理采用，继续阅读[动手学习自进化智能体](https://github.com/tylerelyt/self-evolving-agent-harness)；本练习先观察当前记忆、反馈或恢复机制怎样工作。
 
 [主题目录](../README.md) · [课程首页](../../README.md)

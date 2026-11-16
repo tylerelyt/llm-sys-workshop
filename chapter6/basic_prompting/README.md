@@ -54,8 +54,6 @@ python chapter6/basic_prompting/example1.py
 
 <a id="next-steps"></a>
 
-## 下一步
-
 ## 在自己的项目中使用
 
 选择一组包含正常、边界与含糊输入的问题，先定义怎样判断输出合格，再固定题目比较提示。需要外部事实时，继续做[向量问答](../vector_qa/README.md)，检查提示改进与补充证据分别解决了什么。

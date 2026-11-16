@@ -234,8 +234,6 @@ text_splitter = RecursiveCharacterTextSplitter(
 
 <a id="next-steps"></a>
 
-## 后续学习
-
 ## 在自己的项目中使用
 
 在自己的固定问题集中标出每题需要的原文，分别检查召回候选与最终上下文。将相关文档被遗漏的案例与排序错误分开，再把策略接回[向量问答](../vector_qa/README.md)的批量实验；两者的数据格式与检索实现需要自行适配。

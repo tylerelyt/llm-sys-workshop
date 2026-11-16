@@ -54,8 +54,6 @@ python chapter8/react_agent/example1.py --max-turns 1
 
 <a id="next-steps"></a>
 
-## 下一步
-
 ## 在自己的项目中使用
 
 选一个需要外部信息才能完成的任务，为工具准备可独立核对的返回值，检查模型是否依据实际观察选择下一步。用[手写工具循环](../manual_tool_loop/README.md)进一步检查参数处理与停止条件，再决定采用哪种动作格式。

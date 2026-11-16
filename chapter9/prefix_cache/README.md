@@ -128,8 +128,6 @@ python chapter9/prefix_cache/example.py --live
 
 <a id="next-steps"></a>
 
-## 下一步
-
 ## 在自己的项目中使用
 
 选一组共享系统指令、问题不同的真实请求，先观察稳定前缀，再用服务实际返回的缓存用量核对效果。保持答案质量、输入内容和采样条件可比，并结合[会话历史](../../chapter8/conversation_memory/README.md)区分缓存复用与状态保存。
